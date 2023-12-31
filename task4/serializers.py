@@ -6,10 +6,10 @@ from django.contrib.auth import authenticate
 
 
 class LoginUserSerializer(serializers.ModelSerializer):
-    username = serializers.CharField()
+    username = serializers.CharField(required=True)
     access = serializers.CharField(read_only=True)
     refresh = serializers.CharField(read_only=True)
-    password = serializers.CharField(style={'input_type': 'password'})
+    password = serializers.CharField(max_length=128, write_only=True, style={'input_type': 'password'})
     
     class Meta:
          model = User
@@ -32,7 +32,7 @@ class LoginUserSerializer(serializers.ModelSerializer):
                     'refresh': refresh_token,
                     'username': username,
                 }
-                return user
+                return res
             else:
                 raise serializers.ValidationError("Invalid login credentials!")
             
