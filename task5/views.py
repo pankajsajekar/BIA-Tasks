@@ -28,7 +28,7 @@ class UploadVideoView(APIView):
             edited_video_path = os.path.join( settings.MEDIA_ROOT , edited_video_path)
             video_with_text.write_videofile(edited_video_path, codec='libx264', fps=24)
             
-            serializer.save(edited_video=video_with_text)
+            serializer.save(edited_video=edited_video_path)
             
             # Return the edited video as a downloadable file
             with open(edited_video_path, 'rb') as output_file:
